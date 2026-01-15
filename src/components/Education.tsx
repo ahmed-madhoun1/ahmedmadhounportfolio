@@ -27,7 +27,7 @@ export const Education = () => {
                     </div>
                     <div>
                         <h3 className="text-xl font-bold text-gray-900 dark:text-white">
-                            Mobile Computing and Smart Device Applications
+                            Software Engineering
                         </h3>
                         <p className="text-lg text-gray-700 dark:text-gray-300 mt-2">
                             Islamic University of Gaza — Bachelor’s degree

@@ -1,5 +1,5 @@
 
-import { Download, ChevronDown, Phone } from 'lucide-react';
+import { Download, ChevronDown, Phone, Mail } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export const Hero = () => {
