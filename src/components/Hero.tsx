@@ -1,6 +1,6 @@
-
 import { Download, ChevronDown, Phone, Mail } from 'lucide-react';
 import { motion } from 'framer-motion';
+import cvFile from '../assets/Ahmed_Almdhoun_CV.pdf';
 
 export const Hero = () => {
     return (
@@ -35,8 +35,8 @@ export const Hero = () => {
 
                     <div className="flex flex-col sm:flex-row gap-4 mt-8 justify-center">
                         <a
-                            href="/resume.pdf"
-                            download
+                            href={cvFile}
+                            download="Ahmed_Almdhoun_CV.pdf"
                             className="inline-flex items-center justify-center px-8 py-3 rounded-full bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/30 gap-2"
                         >
                             <Download size={20} />

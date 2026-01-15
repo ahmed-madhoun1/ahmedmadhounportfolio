@@ -61,7 +61,7 @@ export const ProjectDetailsModal = ({ project, isOpen, onClose }: ProjectDetails
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.9, y: 20 }}
                     transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                    className="relative w-full max-w-4xl max-h-[90vh] bg-white/70 dark:bg-gray-900/70 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden flex flex-col border border-white/20 dark:border-white/10"
+                    className="relative w-full max-w-4xl max-h-[90vh] bg-white/40 dark:bg-black/40 backdrop-blur-3xl rounded-3xl shadow-2xl overflow-hidden flex flex-col border border-white/20 dark:border-white/10"
                 >
                     {/* Header with Images */}
                     <div className="relative h-64 sm:h-80 md:h-96 bg-gray-100/50 dark:bg-gray-800/50 shrink-0">

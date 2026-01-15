@@ -129,7 +129,7 @@ const ProjectCard = ({ project, index, onOpenDetails }: { project: any; index: n
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: index * 0.1 }}
-            className="group relative bg-white/60 dark:bg-gray-900/40 backdrop-blur-xl rounded-2xl overflow-hidden shadow-lg border border-white/20 dark:border-white/10 flex flex-col h-full hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
+            className="group relative bg-white/30 dark:bg-black/20 backdrop-blur-2xl rounded-2xl overflow-hidden shadow-lg border border-white/20 dark:border-white/10 flex flex-col h-full hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
         >
             {/* Cover Image Area */}
             <div className="relative h-56 overflow-hidden">
