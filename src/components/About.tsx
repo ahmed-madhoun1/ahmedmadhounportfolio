@@ -15,7 +15,7 @@ export const About = () => {
                     <div className="w-20 h-1.5 bg-blue-600 mx-auto rounded-full"></div>
 
                     <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 leading-relaxed max-w-3xl mx-auto">
-                        Mobile Software Engineer with extensive experience in Flutter, Dart, Android, and Kotlin.
+                        Mobile Software Engineer with extensive experience in Flutter, Android native, and Kotlin Multiplatform.
                         Proven track record of developing high-performance applications, optimizing UI rendering,
                         and implementing secure data-sharing functionalities.
                     </p>
