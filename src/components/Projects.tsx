@@ -42,7 +42,7 @@ const projects = [
     },
     {
         name: 'TAB Tactical Analysis Board',
-        role: 'Mobile Engineer',
+        role: 'Senior Mobile Software Engineer',
         roleDesc: 'Developed tactical analysis tools for sports professionals.',
         shortDesc: 'A specialized tool for coaches and analysts to create, save, and share tactical plays and game strategies with precision and ease.',
         platform: 'Flutter',
