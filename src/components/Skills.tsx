@@ -1,66 +1,122 @@
+import { useState, useRef, useCallback } from "react";
+import { motion } from "framer-motion";
+import { Smartphone, Layers, Cpu, Cloud, Wrench } from "lucide-react";
+import { skillCategories, type SkillCategory } from "../data/portfolioData";
+import { fadeUp, staggerContainer } from "../utils/animations";
+import { BackgroundDepthElements } from "./3d/BackgroundDepthElements";
 
-import { motion } from 'framer-motion';
+type IconComponent = React.ComponentType<{ size?: number; className?: string }>;
 
-const skillCategories = [
-    {
-        title: 'Core Technical Skills',
-        skills: [
-            'Flutter', 'Dart', 'Android', 'Kotlin', 'Jetpack Compose',
-            'Bloc / Cubit', 'Kotlin Multiplatform (KMP)', 'Android SDK',
-            'Android Jetpack (Coroutines, Flow, Lifecycle)', 'REST APIs'
-        ],
-    },
-    {
-        title: 'Additional Tools & Patterns',
-        skills: [
-            'AI Tools', 'Firebase', 'Hilt / Koin', 'CI/CD (GitHub Actions/GitLab CI)',
-            'Unit & Integration Testing', 'TDD', 'Git', 'NFC & QR integrations',
-            'Performance optimization', 'Modularization', 'Clean Architecture',
-            'MVI / MVVM', 'Swift (iOS)'
-        ],
-    },
-];
+const iconMap: Record<string, IconComponent> = {
+  smartphone: Smartphone,
+  layers: Layers,
+  cpu: Cpu,
+  cloud: Cloud,
+  tool: Wrench,
+};
 
 export const Skills = () => {
-    return (
-        <section id="skills" className="py-20 bg-white dark:bg-gray-900 transition-colors">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="text-center mb-16"
-                >
-                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Skills</h2>
-                    <div className="w-20 h-1.5 bg-blue-600 mx-auto mt-4 rounded-full"></div>
-                </motion.div>
+  return (
+    <section id="skills" className="relative py-24 md:py-32 bg-neutral-50 dark:bg-neutral-900 border-y border-neutral-100 dark:border-neutral-800 overflow-hidden">
+      <BackgroundDepthElements variant="skills" />
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto">
-                    {skillCategories.map((category, idx) => (
-                        <motion.div
-                            key={idx}
-                            initial={{ opacity: 0, x: idx === 0 ? -20 : 20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            className="space-y-6"
-                        >
-                            <h3 className="text-xl font-bold text-gray-900 dark:text-white text-center md:text-left">
-                                {category.title}
-                            </h3>
-                            <div className="flex flex-wrap justify-center md:justify-start gap-3">
-                                {category.skills.map((skill, index) => (
-                                    <span
-                                        key={index}
-                                        className="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-lg text-sm font-medium border border-gray-200 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-500 transition-colors"
-                                    >
-                                        {skill}
-                                    </span>
-                                ))}
-                            </div>
-                        </motion.div>
-                    ))}
-                </div>
-            </div>
-        </section>
-    );
+      <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} className="mb-16">
+          <p className="text-xs font-semibold uppercase tracking-widest text-neutral-400 dark:text-neutral-500 mb-3">
+            Skills
+          </p>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-neutral-900 dark:text-white">
+            Technical Skills
+          </h2>
+          <p className="mt-3 text-base text-neutral-500 dark:text-neutral-400 max-w-xl">
+            Specialized in building performant, production-ready mobile architectures and scalable UI systems.
+          </p>
+        </motion.div>
+
+        <motion.div
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+          variants={staggerContainer}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
+        >
+          {skillCategories.map((category) => (
+            <SkillCard3D key={category.title} category={category} />
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  );
 };
+
+const SkillCard3D = ({ category }: { category: SkillCategory }) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [tiltStyle, setTiltStyle] = useState<React.CSSProperties>({});
+  const Icon: IconComponent = iconMap[category.icon] ?? Smartphone;
+
+  const handlePointerMove = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType === "touch") return;
+    const card = cardRef.current;
+    if (!card) return;
+
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const rotateX = -((y - rect.height / 2) / (rect.height / 2)) * 7;
+    const rotateY = ((x - rect.width / 2) / (rect.width / 2)) * 7;
+
+    setTiltStyle({
+      transform: `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(8px)`,
+      transition: "transform 0.08s ease-out",
+    });
+  }, []);
+
+  const handlePointerLeave = useCallback(() => {
+    setTiltStyle({
+      transform: "perspective(800px) rotateX(0deg) rotateY(0deg) translateZ(0px)",
+      transition: "transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)",
+    });
+  }, []);
+
+  return (
+    <motion.div
+      variants={fadeUp}
+      ref={cardRef}
+      onPointerMove={handlePointerMove}
+      onPointerLeave={handlePointerLeave}
+      style={{
+        transformStyle: "preserve-3d",
+        ...tiltStyle,
+      }}
+      className="p-6 rounded-2xl bg-white dark:bg-neutral-800/60 border border-neutral-100 dark:border-neutral-700/60 hover:border-neutral-300 dark:hover:border-neutral-600 hover:shadow-xl transition-all duration-300 group cursor-default select-none"
+    >
+      <div
+        className="flex items-center gap-3 mb-5"
+        style={{ transform: "translateZ(16px)" }}
+      >
+        <div className="p-2.5 rounded-xl bg-neutral-100 dark:bg-neutral-700/60 text-neutral-600 dark:text-neutral-300 group-hover:bg-neutral-900 dark:group-hover:bg-white group-hover:text-white dark:group-hover:text-neutral-900 group-hover:rotate-6 group-hover:scale-110 transition-all duration-300 shadow-sm">
+          <Icon size={18} />
+        </div>
+        <h3 className="text-sm font-bold text-neutral-900 dark:text-white tracking-tight">
+          {category.title}
+        </h3>
+      </div>
+
+      <div
+        className="flex flex-wrap gap-2"
+        style={{ transform: "translateZ(12px)" }}
+      >
+        {category.skills.map((skill) => (
+          <span
+            key={skill}
+            className="inline-block px-2.5 py-1 text-xs font-medium rounded-lg bg-neutral-100 dark:bg-neutral-700/50 text-neutral-700 dark:text-neutral-300 border border-neutral-200/60 dark:border-neutral-600/40 hover:bg-neutral-900 hover:text-white dark:hover:bg-white dark:hover:text-neutral-900 hover:-translate-y-0.5 hover:shadow-sm transition-all duration-200"
+          >
+            {skill}
+          </span>
+        ))}
+      </div>
+    </motion.div>
+  );
+};
+

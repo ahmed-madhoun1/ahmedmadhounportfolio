@@ -7,9 +7,13 @@ const PROJECT_ASSET_MAP: Record<string, string> = {
     'Eventorio': 'eventiro',
     'Tab Tactical Analysis Board': 'tab', // Fix case sensitivity if needed ("TAB" vs "Tab")
     'TAB Tactical Analysis Board': 'tab',
+    'TAB - Tactical Analysis Board': 'tab',
     'Cue': 'cue.png',
     'Mataeim': 'mataiem.png',
     'Aman': 'aman.png',
+    'Medace Hub': 'medace.png',
+    'MED ACE': 'medace.png',
+    'Medace': 'medace.png',
 };
 
 // Import all images from assets directory

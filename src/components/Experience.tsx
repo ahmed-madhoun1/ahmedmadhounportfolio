@@ -1,100 +1,133 @@
-
-import { motion } from 'framer-motion';
-import { Calendar, Building2 } from 'lucide-react';
-
-const experiences = [
-    {
-        role: 'Senior Flutter Engineer',
-        company: 'Event Masters',
-        period: 'May 2025 – Aug 2025',
-        description: [
-            'Developed and maintained multiple company apps using Flutter & Dart, including Event Masters Freelancers and Event Masters Promotions.',
-            'Built the Academy module in Freelancers: designed course flows, integrated backend APIs, and implemented onboarding UX.',
-            'Refactored legacy features and re-engineered code paths to improve responsiveness and maintainability.',
-            'Led performance monitoring and cross-platform optimization efforts to enhance app stability and user experience.',
-        ],
-    },
-    {
-        role: 'Android Engineer',
-        company: 'Saving Solutions Company',
-        period: '', // Not provided in text, assuming N/A or previous. Wait, looks like the block structure is Company | Date? No, Saving Solutions Company has no date in the text block provided. Wait. "Event Masters | May 2025...". "Saving Solutions Company" line is solitary.
-        // I will check the text again carefully.
-        // "Android Engineer" -> "Saving Solutions Company". Formatting in user text was:
-        // "Developed Zaheed... Android Engineer Saving Solutions Company"
-        // I need to be careful. The user text says:
-        // "Developed Zaheed... (bullets) ... Android Engineer Saving Solutions Company"
-        // Usually the Role/Company is a header.
-        // I will format it as Role: Android Engineer at Saving Solutions Company.
-        description: [
-            'Developed Zaheed a large-scale Android e-commerce app using Kotlin & Jetpack Compose.',
-            'Implemented secure payment gateway, complex UI flows, and efficient pagination for large product catalogs.',
-            'Optimized UI rendering and memory usage, resulting in 30% improved scrolling performance and reduced memory consumption.',
-        ],
-    },
-    {
-        role: 'Mobile Software Engineer',
-        company: 'Cue Tech',
-        period: '',
-        description: [
-            'Developed and shipped Aman (cross-platform, Flutter) and Cue (Android), focusing on secure data sharing and high performance.',
-            'Implemented NFC & QR-based data flows and end-to-end encryption to secure emergency data exchanges.',
-            'Optimized system performance, improving data transfer speed by 20%, increasing reliability under high-pressure scenarios.',
-            'Delivered features from architecture to release; collaborated with backend and design teams to ensure seamless integrations.',
-        ],
-    },
-];
+import { useState, useRef, useCallback } from "react";
+import { motion } from "framer-motion";
+import { Calendar } from "lucide-react";
+import { experiences, type Experience as ExperienceType } from "../data/portfolioData";
+import { fadeUp, staggerContainer } from "../utils/animations";
 
 export const Experience = () => {
-    return (
-        <section id="experience" className="py-20 bg-gray-50 dark:bg-gray-800 transition-colors">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="text-center mb-16"
-                >
-                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Experience</h2>
-                    <div className="w-20 h-1.5 bg-blue-600 mx-auto mt-4 rounded-full"></div>
-                </motion.div>
+  return (
+    <section id="experience" className="relative py-24 md:py-32 bg-white dark:bg-neutral-950 overflow-hidden">
+      {/* Subtle depth lighting accent in background */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute top-1/3 -left-32 w-80 h-80 rounded-full bg-blue-500/5 dark:bg-blue-500/10 blur-3xl select-none"
+      />
 
-                <div className="max-w-4xl mx-auto space-y-8">
-                    {experiences.map((exp, index) => (
-                        <motion.div
-                            key={index}
-                            initial={{ opacity: 0, x: -20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.1 }}
-                            className="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow border border-gray-100 dark:border-gray-800"
-                        >
-                            <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
-                                <div>
-                                    <h3 className="text-xl font-bold text-gray-900 dark:text-white">{exp.role}</h3>
-                                    <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 mt-2">
-                                        <Building2 size={18} />
-                                        <span>{exp.company}</span>
-                                    </div>
-                                </div>
-                                {exp.period && (
-                                    <div className="flex items-center gap-2 text-sm font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 px-3 py-1 rounded-full">
-                                        <Calendar size={16} />
-                                        <span>{exp.period}</span>
-                                    </div>
-                                )}
-                            </div>
-                            <ul className="space-y-3">
-                                {exp.description.map((item, i) => (
-                                    <li key={i} className="flex items-start gap-3 text-gray-600 dark:text-gray-300">
-                                        <span className="mt-2 w-1.5 h-1.5 bg-blue-600 rounded-full flex-shrink-0"></span>
-                                        <span className="leading-relaxed">{item}</span>
-                                    </li>
-                                ))}
-                            </ul>
-                        </motion.div>
-                    ))}
-                </div>
-            </div>
-        </section>
-    );
+      <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} className="mb-16">
+          <p className="text-xs font-semibold uppercase tracking-widest text-neutral-400 dark:text-neutral-500 mb-3">
+            Experience
+          </p>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-neutral-900 dark:text-white">
+            Work Experience
+          </h2>
+          <p className="mt-3 text-base text-neutral-500 dark:text-neutral-400 max-w-xl">
+            Track record of shipping production Flutter and native Android applications to thousands of users.
+          </p>
+        </motion.div>
+
+        <div className="relative">
+          {/* Layered timeline line with gradient depth */}
+          <div
+            aria-hidden="true"
+            className="absolute left-0 top-3 bottom-3 w-[2px] bg-gradient-to-b from-blue-500/60 via-neutral-300 dark:via-neutral-700 to-transparent ml-[7px]"
+          />
+
+          <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={staggerContainer} className="space-y-10">
+            {experiences.map((exp, index) => (
+              <ExperienceCard3D key={index} exp={exp} />
+            ))}
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
 };
+
+const ExperienceCard3D = ({ exp }: { exp: ExperienceType }) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [tiltStyle, setTiltStyle] = useState<React.CSSProperties>({});
+
+  const handlePointerMove = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType === "touch") return;
+    const card = cardRef.current;
+    if (!card) return;
+
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const rotateX = -((y - rect.height / 2) / (rect.height / 2)) * 4.5;
+    const rotateY = ((x - rect.width / 2) / (rect.width / 2)) * 4.5;
+
+    setTiltStyle({
+      transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(6px)`,
+      transition: "transform 0.08s ease-out",
+    });
+  }, []);
+
+  const handlePointerLeave = useCallback(() => {
+    setTiltStyle({
+      transform: "perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)",
+      transition: "transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)",
+    });
+  }, []);
+
+  return (
+    <motion.div variants={fadeUp} className="relative pl-9 sm:pl-10">
+      {/* 3D Timeline Node */}
+      <div
+        aria-hidden="true"
+        className="absolute left-0 top-2 -translate-x-[1px] flex items-center justify-center"
+      >
+        <span className="w-4 h-4 rounded-full border-2 border-neutral-900 dark:border-white bg-white dark:bg-neutral-950 shadow-sm" />
+      </div>
+
+      {/* 3D Perspective Card */}
+      <div
+        ref={cardRef}
+        onPointerMove={handlePointerMove}
+        onPointerLeave={handlePointerLeave}
+        style={{
+          transformStyle: "preserve-3d",
+          ...tiltStyle,
+        }}
+        className="group p-6 md:p-8 rounded-2xl bg-neutral-50 dark:bg-neutral-900 border border-neutral-100 dark:border-neutral-800 hover:border-neutral-300 dark:hover:border-neutral-700 transition-all duration-300 hover:shadow-xl select-none"
+      >
+        <div
+          className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-5"
+          style={{ transform: "translateZ(14px)" }}
+        >
+          <div>
+            <h3 className="text-lg font-bold text-neutral-900 dark:text-white tracking-tight">
+              {exp.role}
+            </h3>
+            <p className="text-sm font-medium text-neutral-500 dark:text-neutral-400 mt-1">
+              {exp.company}
+            </p>
+          </div>
+
+          {exp.period && (
+            <div className="flex items-center gap-1.5 text-xs font-medium text-neutral-400 dark:text-neutral-500 shrink-0 bg-white/70 dark:bg-neutral-800/70 border border-neutral-200/50 dark:border-neutral-700/50 px-3 py-1 rounded-full backdrop-blur-sm self-start sm:self-auto">
+              <Calendar size={12} className="text-neutral-500 dark:text-neutral-400" />
+              <span>{exp.period}</span>
+            </div>
+          )}
+        </div>
+
+        <ul
+          className="space-y-2.5"
+          style={{ transform: "translateZ(10px)" }}
+        >
+          {exp.description.map((item, i) => (
+            <li key={i} className="flex items-start gap-3 text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed">
+              <span aria-hidden="true" className="mt-[8px] w-1.5 h-1.5 bg-blue-500/70 dark:bg-blue-400/80 rounded-full flex-shrink-0" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </motion.div>
+  );
+};
+
