@@ -1,6 +1,6 @@
 import { useState, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
-import { Smartphone, Layers, Cpu, Cloud, Wrench } from "lucide-react";
+import { Smartphone, Layers, Cpu, Cloud, Wrench, Tablet, Apple, Zap, GitBranch, Shield } from "lucide-react";
 import { skillCategories, type SkillCategory } from "../data/portfolioData";
 import { fadeUp, staggerContainer } from "../utils/animations";
 import { BackgroundDepthElements } from "./3d/BackgroundDepthElements";
@@ -13,6 +13,11 @@ const iconMap: Record<string, IconComponent> = {
   cpu: Cpu,
   cloud: Cloud,
   tool: Wrench,
+  android: Tablet,
+  apple: Apple,
+  flutter: Zap,
+  kmp: GitBranch,
+  shield: Shield,
 };
 
 export const Skills = () => {

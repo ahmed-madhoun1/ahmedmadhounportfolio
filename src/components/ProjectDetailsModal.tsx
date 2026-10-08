@@ -144,19 +144,19 @@ export const ProjectDetailsModal = ({
             {/* Scrollable content */}
             <div className="flex-1 overflow-y-auto">
 
-              {/* Image carousel */}
+              {/* Image display */}
               {images.length > 0 ? (
-                <div className="relative w-full h-[260px] sm:h-[300px] bg-neutral-100 dark:bg-neutral-900 overflow-hidden shrink-0 flex items-center justify-center select-none border-b border-neutral-100 dark:border-neutral-800">
+                <div className="relative w-full bg-white dark:bg-neutral-950 overflow-hidden shrink-0 flex items-center justify-center select-none border-b border-neutral-100 dark:border-neutral-800">
                   <AnimatePresence mode="wait">
                     <motion.img
                       key={currentImageIndex}
                       src={images[currentImageIndex]}
                       alt={`${project.name} screenshot ${currentImageIndex + 1}`}
-                      initial={{ opacity: 0, scale: 0.97 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.97 }}
-                      transition={{ duration: 0.22, ease: "easeOut" }}
-                      className="max-h-full max-w-full w-auto h-auto object-contain block mx-auto drop-shadow-md"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.2, ease: "easeOut" }}
+                      className="w-full h-auto max-h-[65vh] object-contain block mx-auto"
                     />
                   </AnimatePresence>
                   {images.length > 1 && (
@@ -189,7 +189,7 @@ export const ProjectDetailsModal = ({
                   )}
                 </div>
               ) : (
-                <div className="h-24 flex items-center justify-center gap-2 text-neutral-400 dark:text-neutral-600 bg-neutral-50 dark:bg-neutral-900/60 shrink-0 border-b border-neutral-100 dark:border-neutral-800">
+                <div className="h-24 flex items-center justify-center gap-2 text-neutral-400 dark:text-neutral-600 bg-white dark:bg-neutral-950 shrink-0 border-b border-neutral-100 dark:border-neutral-800">
                   <Smartphone size={20} />
                   <span className="text-xs font-medium">No screenshots available</span>
                 </div>

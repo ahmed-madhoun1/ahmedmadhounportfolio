@@ -6,7 +6,7 @@ export const personalInfo = {
   title: 'Senior Mobile Software Engineer',
   tagline: 'Mobile software engineer specializing in Flutter, Kotlin, and Android development.',
   summary:
-    'Senior Mobile Software Engineer with over 5 years of experience developing iOS and Android applications. Specializes in Flutter, Kotlin, and Clean Architecture, with direct experience shipping production apps to the App Store and Google Play. Background includes building modular architectures, implementing end-to-end encryption, and optimizing app performance for high-traffic products.',
+    'Senior Mobile Software Engineer with over 7 years of experience developing iOS and Android applications. Specializes in Flutter, Kotlin, and Clean Architecture, with direct experience shipping production apps to the App Store and Google Play. Background includes building modular architectures, implementing end-to-end encryption, and optimizing app performance for high-traffic products.',
   email: 'ahmed2madhoun2@gmail.com',
   phone: '+970-567-746-416',
   github: 'https://github.com/ahmed-madhoun1',
@@ -21,6 +21,16 @@ export interface Experience {
 }
 
 export const experiences: Experience[] = [
+  {
+    role: 'Mobile Software Engineer',
+    company: 'Freelance / Self-Employed',
+    period: 'Jun 2026 – Present',
+    description: [
+      'Developing and delivering custom mobile applications for clients and businesses using Flutter, Kotlin, and Kotlin Multiplatform (KMP).',
+      'Handling end-to-end mobile development: technical architecture, API integration, performance optimization, and store deployment.',
+      'Collaborating directly with founders and product owners to turn product requirements into production releases.',
+    ],
+  },
   {
     role: 'Senior Flutter Engineer',
     company: 'Skhaa for Information Technology',
@@ -83,35 +93,69 @@ export interface SkillCategory {
 
 export const skillCategories: SkillCategory[] = [
   {
-    title: 'Mobile Development',
-    icon: 'smartphone',
-    skills: ['Flutter', 'Dart', 'Kotlin', 'Android SDK', 'iOS', 'Kotlin Multiplatform (KMP)', 'Compose Multiplatform'],
+    title: 'Android Development',
+    icon: 'android',
+    skills: ['Kotlin', 'Android SDK', 'Jetpack Compose', 'Coroutines & Flow', 'Hilt', 'Room', 'WorkManager', 'DataStore'],
   },
   {
-    title: 'Architecture & Design',
+    title: 'iOS Development',
+    icon: 'apple',
+    skills: ['Swift', 'SwiftUI', 'UIKit', 'Combine', 'Core Data', 'XCTest', 'App Store Connect'],
+  },
+  {
+    title: 'Flutter & Dart',
+    icon: 'flutter',
+    skills: ['Flutter', 'Dart', 'Bloc / Cubit', 'Provider', 'Riverpod', 'GetX', 'Dio', 'Flutter Hooks', 'Widget Testing'],
+  },
+  {
+    title: 'Kotlin Multiplatform',
+    icon: 'kmp',
+    skills: ['Kotlin Multiplatform (KMP)', 'Compose Multiplatform', 'Ktor Client', 'SQLDelight', 'Koin', 'Shared ViewModels'],
+  },
+  {
+    title: 'Engineering Principles',
     icon: 'layers',
-    skills: ['Clean Architecture', 'SOLID Principles', 'MVI / MVVM', 'Modularization', 'Unit & Widget Testing'],
-  },
-  {
-    title: 'UI & State Management',
-    icon: 'cpu',
-    skills: ['Bloc', 'Provider', 'Jetpack Compose', 'Material Design', 'Coroutines & Flow'],
-  },
-  {
-    title: 'Networking & APIs',
-    icon: 'cloud',
-    skills: ['RESTful APIs', 'Dio', 'Retrofit', 'GraphQL', 'WebSockets', 'Firebase'],
-  },
-  {
-    title: 'Security, Storage & DevOps',
-    icon: 'tool',
     skills: [
-      'End-to-End Encryption',
-      'OAuth2 & Biometrics',
-      'SQLite & Room',
-      'Secure Storage & ProGuard',
+      'Clean Architecture',
+      'SOLID Principles',
+      'Design Patterns (MVI, MVVM, MVP)',
+      'Modularization',
+      'TDD & Unit Testing',
+      'Git & Git Flow',
+      'Code Review',
+      'Design Systems',
+      'Dependency Injection',
+      'Domain-Driven Design',
+    ],
+  },
+  {
+    title: 'Networking & Cloud',
+    icon: 'cloud',
+    skills: [
+      'RESTful APIs',
+      'GraphQL',
+      'WebSockets',
+      'Firebase',
+      'Supabase',
+      'Retrofit',
+      'Docker',
+      'AWS',
       'CI/CD (GitHub Actions)',
       'Google Play Console & App Store Connect',
+    ],
+  },
+  {
+    title: 'Security & Storage',
+    icon: 'shield',
+    skills: [
+      'End-to-End Encryption',
+      'OAuth2 & JWT',
+      'Biometric Authentication',
+      'SQLite & Room',
+      'SharedPreferences & DataStore',
+      'Secure Storage',
+      'ProGuard & R8',
+      'NFC & QR Data Security',
     ],
   },
 ];
@@ -130,15 +174,26 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    name: 'Medace Hub',
-    role: 'Senior Flutter Engineer',
-    roleDesc: 'Developed curriculum-based video player, progress tracking, in-app purchases, and bilingual localization (Arabic and English).',
+    name: 'PartX',
+    role: 'Senior KMP Engineer',
+    roleDesc: 'Architected and engineered the cross-platform automotive parts marketplace and merchant platform for Android and iOS using Kotlin Multiplatform (KMP), featuring real-time order tracking, multi-filter catalog search, inventory control, and secure payment workflows.',
     shortDesc:
-      'A medical learning application for medical students and doctors. Includes structured video courses by subject, chapter previews, user progress tracking, in-app subscription passes, and full English and Arabic support.',
-    platform: 'Flutter',
+      'An automotive parts marketplace and all-in-one merchant platform connecting shops, workshops, and car owners across Android and iOS. Built with Kotlin Multiplatform (KMP) featuring compatibility filtering, stock tracking, and checkout.',
+    platform: 'KMP',
+    appStoreUrl: 'https://apps.apple.com/us/app/partx/id6795985854',
+    playStoreUrl: 'https://play.google.com/store/apps/details?id=app.partx.partx',
+    technologies: ['Kotlin Multiplatform (KMP)', 'Compose Multiplatform', 'Kotlin', 'REST APIs', 'Clean Architecture', 'Payment Gateways', 'Inventory Management'],
+  },
+  {
+    name: 'Medace Hub',
+    role: 'Senior KMP Engineer',
+    roleDesc: 'Developed curriculum-based video player, progress tracking, in-app purchases, and bilingual localization (Arabic and English) across Android and iOS using Kotlin Multiplatform (KMP).',
+    shortDesc:
+      'A medical learning application for medical students and doctors on Android and iOS. Built with Kotlin Multiplatform (KMP), featuring video courses, chapter previews, user progress tracking, and in-app subscription passes.',
+    platform: 'KMP',
     appStoreUrl: 'https://apps.apple.com/us/app/medace-hub/id6757759024',
     playStoreUrl: 'https://play.google.com/store/apps/details?id=app.medace.medace',
-    technologies: ['Flutter', 'Dart', 'In-App Purchases', 'REST APIs', 'Video Streaming', 'State Management'],
+    technologies: ['Kotlin Multiplatform (KMP)', 'Compose Multiplatform', 'Kotlin', 'In-App Purchases', 'REST APIs', 'Video Streaming', 'State Management'],
   },
   {
     name: 'Event Masters',
@@ -255,8 +310,8 @@ export interface MetricStat {
 }
 
 export const stats: MetricStat[] = [
-  { value: '5+', label: 'Years Experience', sublabel: 'Mobile software engineering' },
-  { value: '9', label: 'Production Apps', sublabel: 'Published on App Store & Google Play' },
+  { value: '7+', label: 'Years Experience', sublabel: 'Mobile software engineering' },
+  { value: '10', label: 'Production Apps', sublabel: 'Published on App Store & Google Play' },
   { value: '99.9%', label: 'Crash-Free Rate', sublabel: 'Across production releases' },
   { value: '100k+', label: 'Active Users', sublabel: 'Across published applications' },
 ];

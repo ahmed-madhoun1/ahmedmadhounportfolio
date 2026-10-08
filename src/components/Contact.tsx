@@ -1,11 +1,16 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Send, Mail, Phone, Github, Linkedin, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
+import { Send, Mail, Phone, Github, Linkedin, CheckCircle, AlertCircle, Loader2, Copy, Check } from "lucide-react";
 import { personalInfo } from "../data/portfolioData";
 import { fadeUp } from "../utils/animations";
 
 // Formspree endpoint (free tier, no secret keys exposed on client side)
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/xjkrpjge";
+// To connect to your inbox: set VITE_FORMSPREE_FORM_ID=<your_form_id> in .env
+const FORMSPREE_FORM_ID =
+  import.meta.env.VITE_FORMSPREE_FORM_ID ||
+  import.meta.env.VITE_FORMSPREE_ID ||
+  "myekwyrb";
+const FORMSPREE_ENDPOINT = `https://formspree.io/f/${FORMSPREE_FORM_ID}`;
 
 type FormState = "idle" | "loading" | "success" | "error";
 
@@ -70,6 +75,24 @@ export const Contact = () => {
   const [errors, setErrors] = useState<FormErrors>({});
   const [formState, setFormState] = useState<FormState>("idle");
   const [touched, setTouched] = useState<Partial<Record<keyof FormData, boolean>>>({});
+  const [copied, setCopied] = useState(false);
+
+  const mailtoHref = `mailto:${personalInfo.email}?subject=${encodeURIComponent(
+    `Portfolio Contact from ${formData.name || "Website Visitor"}`
+  )}&body=${encodeURIComponent(
+    `Name: ${formData.name || "N/A"}\nEmail: ${formData.email || "N/A"}\nPhone: ${formData.phone || "Not provided"}\n\nMessage:\n${formData.message || ""}`
+  )}`;
+
+  const handleCopyMessage = async () => {
+    const text = `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone || "Not provided"}\n\nMessage:\n${formData.message}`;
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    } catch {
+      // clipboard write fallback
+    }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -96,6 +119,13 @@ export const Contact = () => {
     if (Object.keys(validationErrors).length > 0) return;
 
     setFormState("loading");
+
+    // If no valid Formspree endpoint is configured, provide direct mail fallback
+    if (!FORMSPREE_ENDPOINT) {
+      window.location.href = mailtoHref;
+      setFormState("error");
+      return;
+    }
 
     try {
       const response = await fetch(FORMSPREE_ENDPOINT, {
@@ -210,11 +240,48 @@ export const Contact = () => {
               >
                 <h3 className="text-lg font-bold text-neutral-900 dark:text-white mb-6">Send a message</h3>
 
-                {/* Error banner */}
+                {/* Error banner / Email fallback */}
                 {formState === "error" && (
-                  <div className="flex items-start gap-3 p-4 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-100 dark:border-red-800/40 text-sm text-red-600 dark:text-red-400" role="alert">
-                    <AlertCircle size={18} className="shrink-0 mt-0.5" />
-                    <span>Something went wrong. Please try again or reach out via email directly.</span>
+                  <div className="p-4 rounded-xl bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900/50 text-sm space-y-3" role="alert">
+                    <div className="flex items-start gap-3">
+                      <AlertCircle size={18} className="shrink-0 mt-0.5 text-red-600 dark:text-red-400" />
+                      <div className="space-y-1">
+                        <p className="font-semibold text-red-900 dark:text-red-200">
+                          {!FORMSPREE_ENDPOINT
+                            ? "Automated form service not configured yet"
+                            : "Could not send message automatically"}
+                        </p>
+                        <p className="text-xs text-red-700 dark:text-red-300 leading-relaxed">
+                          {!FORMSPREE_ENDPOINT
+                            ? "Please configure your Formspree ID in .env, or use the direct email options below with your pre-filled message:"
+                            : "The form service endpoint could not be reached. You can send your message directly via email without retyping:"}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-2 pt-1 pl-7">
+                      <a
+                        href={mailtoHref}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-600 dark:bg-red-500 text-white text-xs font-semibold hover:bg-red-700 dark:hover:bg-red-600 transition-colors shadow-sm"
+                      >
+                        <Mail size={13} />
+                        Open Email App
+                      </a>
+                      <button
+                        type="button"
+                        onClick={handleCopyMessage}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 text-xs font-medium hover:bg-neutral-50 dark:hover:bg-neutral-750 transition-colors"
+                      >
+                        {copied ? <Check size={13} className="text-green-500" /> : <Copy size={13} />}
+                        {copied ? "Copied to clipboard!" : "Copy message"}
+                      </button>
+                      <a
+                        href={`mailto:${personalInfo.email}`}
+                        className="text-xs text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors underline underline-offset-2 ml-1"
+                      >
+                        {personalInfo.email}
+                      </a>
+                    </div>
                   </div>
                 )}
 
